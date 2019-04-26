@@ -43,7 +43,7 @@ user = ud.findUserByName2(userid);
                         <a class="navbar-brand" href="/admin/admin.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您， <s:property value="#session.admin.name"/> <i class="caret"></i></a>
+                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您， ${userid} <i class="caret"></i></a>
                             
                                  <ul class="dropdown-menu">
                                      <li><a href="#updateinfo" data-toggle="modal">个人资料</a></li>
@@ -145,8 +145,8 @@ user = ud.findUserByName2(userid);
 	                                <td><%= bean.getPassword() %></td>
 	                                
 <td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateModal" 
-id="btn_update" onclick="showInfo2(<%= bean.getUserid() %>,<%= bean.getUsername() %>,<%= bean.getProfession() %>
-,<%= bean.getPassword() %>)">修改</button>
+id="btn_update" onclick="showInfo2('<%= bean.getUserid() %>','<%= bean.getUsername() %>','<%= bean.getProfession() %>'
+,'<%= bean.getPassword() %>')">修改</button>
 <button type="button" class="btn btn-danger btn-xs" onclick="deleteuser('<%= bean.getUserid() %>')">删除</button>
 	</td>                   </tr>                         
                           	  </tbody>
@@ -250,7 +250,7 @@ id="btn_update" onclick="showInfo2(<%= bean.getUserid() %>,<%= bean.getUsername(
     
     
      <!--------------------------------------添加的模糊框------------------------>  
-                                 <form class="form-horizontal" method="post" action="/books/AddUserServlet">   <!--保证样式水平不混乱-->   
+                                 <form class="form-horizontal" method="post" action="/BookManageSystem/RegistServlet">   <!--保证样式水平不混乱-->   
                                         <!-- 模态框（Modal） -->
 									<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										<div class="modal-dialog">
@@ -270,7 +270,7 @@ id="btn_update" onclick="showInfo2(<%= bean.getUserid() %>,<%= bean.getUsername(
 										<div class="form-group">
 											<label for="firstname" class="col-sm-3 control-label">账号</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" name="username" id="addISBN" required="required" placeholder="请输入账号">
+													<input type="text" class="form-control" name="userid" id="addISBN" required="required" placeholder="请输入账号">
 												<label class="control-label" for="addISBN" style="display: none;"></label>	
 												</div>
 										</div>
@@ -278,7 +278,7 @@ id="btn_update" onclick="showInfo2(<%= bean.getUserid() %>,<%= bean.getUsername(
 										 <div class="form-group">
 											<label for="firstname" class="col-sm-3 control-label">姓名</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" name="name" id="addBookName" required="required"  placeholder="请输入姓名">
+													<input type="text" class="form-control" name="username" id="addBookName" required="required"  placeholder="请输入姓名">
 													<label class="control-label" for="addBookName" style="display: none;"></label>	
 												</div>
 										</div>
@@ -286,10 +286,10 @@ id="btn_update" onclick="showInfo2(<%= bean.getUserid() %>,<%= bean.getUsername(
 								
 											
 										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">邮箱</label>
+											<label for="firstname" class="col-sm-3 control-label">专业</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" name="email" id="addAutho" required="required"  placeholder="请输入邮箱">
-												<label class="control-label" for="addAutho" style="display: none;"></label>	
+													<input type="text" class="form-control" name="profession" id="updateemail" required="required"  placeholder="请输入专业">
+												<label class="control-label" for="updateemail" style="display: none;"></label>	
 												</div>
 										</div>
 										

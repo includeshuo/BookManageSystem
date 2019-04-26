@@ -42,7 +42,7 @@ user = ud.findUserByName2(userid);
                         <a class="navbar-brand" href="/BookManageSystem/admin.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您， <s:property value="#session.admin.name"/> <i class="caret"></i></a>
+                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您，${userid} <i class="caret"></i></a>
                             
                                  <ul class="dropdown-menu">
                                      <li><a href="#updateinfo" data-toggle="modal">个人资料</a></li>
@@ -156,9 +156,9 @@ user = ud.findUserByName2(userid);
 	                                <td><%= bean.getBookpub() %></td>  
 	                                <td><%= bean.getBookcount() %></td>
 <td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateModal" 
-id="btn_update" onclick="showInfo2(<%= bean.getBookid() %>,<%= bean.getBooktype() %>,<%= bean.getBookname() %>
-,<%= bean.getBookauthor() %>,<%= bean.getBookpub() %>,<%= bean.getBookcount() %>)">修改</button>
-<button type="button" class="btn btn-danger btn-xs" onclick="deletebook(<%= bean.getBookid() %>)">删除</button>
+id="btn_update" onclick="showInfo2('<%= bean.getBookid() %>','<%= bean.getBooktype() %>','<%= bean.getBookname() %>'
+,'<%= bean.getBookauthor() %>','<%= bean.getBookpub() %>','<%= bean.getBookcount() %>')">修改</button>
+<button type="button" class="btn btn-danger btn-xs" onclick="deletebook('<%= bean.getBookid() %>')">删除</button>
 	</td>  
 	</tr>                                          
                           	  </tbody>

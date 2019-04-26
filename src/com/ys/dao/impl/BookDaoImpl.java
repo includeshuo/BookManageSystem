@@ -173,7 +173,7 @@ public class BookDaoImpl implements BookDao{
 		conn=DBUtil.getConnection();
 		ResultSet rs = null;
 		//这样改不知道行不行
-		ps = conn.prepareStatement("select * from book where book_name like '%\"+?+\"%'");
+		ps = conn.prepareStatement("select * from book where book_name like ?");
 		ps.setString(1, book.getBookname());
 		rs = ps.executeQuery();
 		Book b = null;
@@ -245,5 +245,37 @@ public class BookDaoImpl implements BookDao{
 				ps.setInt(3, hid);
 				ps.executeUpdate();
 	}
+	@Override
+	public void updateBookcount(Book book) throws Exception {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		conn=DBUtil.getConnection();
+		ps = conn.prepareStatement("update book set book_count=? where book_id=? ");
+		
+		 ps.setInt(1,book.getBookcount() );
+		 ps.setInt(2, book.getBookid());
+		ps.executeUpdate();
+	}
+	@Override
+	public Book selectBookByBookid(int hid)throws Exception {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		conn=DBUtil.getConnection();
+		ps = conn.prepareStatement("select * from borrowhistory where hid=?");
+		ps.setInt(1, hid);
+		
+		rs = ps.executeQuery();
+		Book b= null;
+		if(rs.next()) {
+			b = new Book();
+			b.setBookid(rs.getInt("book_id"));
+				
+		}
+		DBUtil.CloseDB(rs, ps, conn);
+		return b;
+		
+	}
+	
 	
 }

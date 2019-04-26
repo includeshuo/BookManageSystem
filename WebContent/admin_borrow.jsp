@@ -43,7 +43,7 @@ user = ud.findUserByName2(userid);
                         <a class="navbar-brand" href="/BookManageSystem/admin.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您， <s:property value="#session.admin.name"/> <i class="caret"></i></a>
+                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您， ${userid} <i class="caret"></i></a>
                             
                                  <ul class="dropdown-menu">
                                      <li><a href="#updateinfo" data-toggle="modal">个人资料</a></li>
@@ -137,10 +137,10 @@ user = ud.findUserByName2(userid);
 	                                <td><%= bean.getUsername() %></td>
 	                                <td><%= bean.getBegintime() %></td>
 	                                <td><%= bean.getEndtime() %></td> 
-<td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateModal" 
-id="btn_update" onclick="haibook(<%= bean.getHid() %>)">还书</button>
-	</td>  
-	</tr>                                          
+<td>
+<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateModal" 
+id="btn_update" onclick="haibook('<%= bean.getHid() %>')">还书
+</button>   </td>                 	  </tr>
                           	  </tbody>
                        <%} %> 
                         </table>
@@ -161,44 +161,7 @@ id="btn_update" onclick="haibook(<%= bean.getHid() %>)">还书</button>
                                      <!-- 修改模态框（Modal） -->
                                      <!-------------------------------------------------------------->  
                                 
-                                        <!-- 修改模态框（Modal） -->
-                               <form class="form-horizontal" method="post" action="/books/updateBookServlet">   <!--保证样式水平不混乱-->   
-									<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-														&times;
-													</button>
-													<h4 class="modal-title" id="updateModalLabel">
-														修改图书分类
-													</h4>
-												</div>
-												<div class="modal-body">
-												
-										<!---------------------表单-------------------->
-										
-										 <div class="form-group">
-											<label for="firstname" class="col-sm-3 control-label">图书名称</label>
-												<div class="col-sm-7">
-													<input type="text" class="form-control" id="updateBookName" name="name"  placeholder="请输入图书名称">
-												<label class="control-label" for="updateBookName" style="display: none;"></label>
-												</div>
-										</div>
-											
-										</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal">关闭
-													</button>
-													<button type="submit" class="btn btn-primary" >
-														修改
-													</button>
-												</div>
-											</div><!-- /.modal-content -->
-										</div><!-- /.modal -->
-									</div>
-	
-                                 </form>
+                                      
                                    <!-------------------------------------------------------------->
  
     
@@ -208,45 +171,7 @@ id="btn_update" onclick="haibook(<%= bean.getHid() %>)">还书</button>
     
     
      <!--------------------------------------添加的模糊框------------------------>  
-                                 <form class="form-horizontal" method="post" action="/books/AddBookServlet">   <!--保证样式水平不混乱-->   
-                                        <!-- 模态框（Modal） -->
-									<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-														&times;
-													</button>
-													<h4 class="modal-title" id="myModalLabel">
-														添加新图书分类
-													</h4>
-												</div>
-												<div class="modal-body">
-												
-										<!---------------------表单-------------------->
-										
-										 <div class="form-group">
-											<label for="firstname" class="col-sm-3 control-label">分类名称</label>
-												<div class="col-sm-7">
-													<input type="text" class="form-control" id="addBookName" required="required" name="name"  placeholder="请输入图书名称">
-													<label class="control-label" for="addBookName" style="display: none;"></label>	
-												</div>
-										</div>
-										
-										<!---------------------表单-------------------->
-									</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal">关闭
-													</button>
-													<button type="submit" class="btn btn-primary" >
-														添加
-													</button>
-												</div>
-											</div><!-- /.modal-content -->
-										</div><!-- /.modal -->
-									</div>
-
-                                 </form>	
+                                 
  								<!--------------------------------------添加的模糊框------------------------>  
  
  

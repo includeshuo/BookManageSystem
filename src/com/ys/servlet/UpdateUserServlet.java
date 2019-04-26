@@ -42,7 +42,7 @@ public class UpdateUserServlet extends HttpServlet {
 		user.setPassword(request.getParameter("password"));
 		user.setUsername(request.getParameter("username"));
 		user.setProfession(request.getParameter("profession"));
-		System.out.println(user);
+		
 		try {
 			userdao.updateUser(user);
 		} catch (Exception e) {

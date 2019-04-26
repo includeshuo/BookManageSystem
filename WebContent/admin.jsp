@@ -46,7 +46,7 @@ user = ud.findUserByName2(userid);
                             <li class="dropdown">
                                 <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> 
                                 <i class="glyphicon glyphicon-user">
-                                </i> 欢迎您， <s:property value="#session.admin.name"/> 
+                                </i> 欢迎您，${userid} 
                                 <i class="caret"></i></a>
                             
                                  <ul class="dropdown-menu">

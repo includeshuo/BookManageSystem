@@ -15,7 +15,7 @@ import com.ys.bean.User;
 import com.ys.dao.UserDao;
 import com.ys.dao.impl.UserDaoImpl;
 
-@WebServlet("/regist")
+@WebServlet("/RegistServlet")
 public class RegistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
@@ -59,8 +59,7 @@ public class RegistServlet extends HttpServlet {
 			}else {
 				us.addUser(u);
 				
-				  response.getWriter().write("注册成功");
-				  response.setHeader("refresh","1;url="+request.getContextPath()+"/admin_user.jsp");
+				response.sendRedirect("/BookManageSystem/admin_user.jsp");
 			}
 			
 		} catch (Exception e) {

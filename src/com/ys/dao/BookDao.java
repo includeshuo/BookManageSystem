@@ -27,4 +27,8 @@ public interface BookDao {
 		//还书功能的函数，根据传入的hid借阅记录id，讲status字段的值改为0，并将还书日期改变为当前日期
 		//改一下 根据传入的图书id进行select
 		public void returnBook(int hid)throws Exception;
+		//根据bookid来设置借书，还书后数量的变化
+		public void updateBookcount(Book book)throws Exception;
+		//根据hid查询Bookid
+		public Book selectBookByBookid(int hid) throws Exception;
 }

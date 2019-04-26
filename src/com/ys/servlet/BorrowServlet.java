@@ -49,8 +49,10 @@ public class BorrowServlet extends HttpServlet {
 			Book bookid = new Book();
 			Book book = new Book();
 			bookid.setBookid(Integer.parseInt(request.getParameter("bookid")));
+			
 			 try {
 				book = bookdao.findBookById(bookid);
+				bookid.setBookcount(book.getBookcount()-1);
 			} catch (Exception e1) {
 				
 				e1.printStackTrace();
@@ -64,6 +66,7 @@ public class BorrowServlet extends HttpServlet {
 			try {
 				user = admindao.findUserByName2(userid);
 				bookdao.borrowBook(book, user);
+				bookdao.updateBookcount(bookid);
 			} catch (Exception e) {
 				
 				e.printStackTrace();
@@ -72,20 +75,30 @@ public class BorrowServlet extends HttpServlet {
 			
 			response.sendRedirect("/BookManageSystem/select.jsp");
 		}else{
+			int hid = Integer.parseInt(request.getParameter("hid"));
+			int show = Integer.parseInt(request.getParameter("show"));
+			Book book = new Book();
+			
+			try {
+				Book bookid = bookdao.selectBookByBookid(hid);
+				book = bookdao.findBookById(bookid);
+				bookid.setBookcount(book.getBookcount()+1);
+				bookdao.returnBook(hid);
+				bookdao.updateBookcount(bookid);
+			} catch (Exception e2) {
+				
+				e2.printStackTrace();
+			}
+			
+			
 			
 			/**
 			 * 还书在管理员和读者界面都有，为了区分，设置了show字段，show为1表示读者界面
 			 */
-			Book book = new Book();
-			int hid = Integer.parseInt(request.getParameter("hid"));
-			int show = Integer.parseInt(request.getParameter("show"));
-			//调用还书函数，改变status字段
-			try {
-				bookdao.returnBook(hid);
-			} catch (Exception e) {
-				
-				e.printStackTrace();
-			};
+			
+			
+			
+			
 			if(show==1){
 				response.sendRedirect("/BookManageSystem/borrow.jsp");
 			}else{

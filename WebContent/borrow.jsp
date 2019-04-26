@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import = "com.ys.bean.User,com.ys.bean.BookHistory,com.ys.dao.BookDao,com.ys.dao.impl.BookDaoImpl,com.ys.dao.UserDao,com.ys.dao.impl.UserDaoImpl" %>
+
 <!DOCTYPE HTML >
 <html lang="zh-CN" class="ax-vertical-centered">
 <head>
@@ -44,7 +45,7 @@ user = ud.findUserByName2(userid);
                     <a class="navbar-brand" href="/BookManageSystem/userindex.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i>     欢迎您，<s:property value="#session.reader.name"/><i class="caret"></i></a>
+                            <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i>     欢迎您，${userid}<i class="caret"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#updateinfo" data-toggle="modal">个人资料</a></li>
                                  <li role="presentation" class="divider"></li>
@@ -129,7 +130,7 @@ user = ud.findUserByName2(userid);
 	                                <td><%= bean.getBegintime() %></td>
 	                                <td><%= bean.getEndtime() %></td>  
 	                                <td>
-<button type="button" class="btn btn-info btn-xs" data-toggle="modal" onclick="haibook(<%= bean.getHid() %>)">还书</button>
+<button type="button" class="btn btn-info btn-xs" data-toggle="modal" onclick="haibook(<%= bean.getHid() %>,<%= bean.getBookid() %>)">还书</button>
 </td>  </tr>                                             
                           	  </tbody>
                              <%} %> 
@@ -137,7 +138,7 @@ user = ud.findUserByName2(userid);
                     </div>
                 </div>
             <script type="text/javascript">
-    function haibook(hid) {
+    function haibook(hid,bookid) {
     	con=confirm("是否还书?"); 
     	if(con==true){
     		location.href = "/BookManageSystem/BorrowServlet?tip=2&show=1&hid="+hid;
