@@ -25,6 +25,7 @@ public class UserDaoImpl implements UserDao{
 			 ps.setString(4, user.getProfession());
 			
 			 ps.executeUpdate();
+		
 	}
 //ID和密码查找 返回User类
 	@Override
@@ -43,7 +44,7 @@ public class UserDaoImpl implements UserDao{
 			u.setUserid(rs.getString("user_id"));
 			u.setPassword(rs.getString("password"));
 			u.setStatus(rs.getInt("status"));
-			
+			DBUtil.CloseDB(rs, ps, conn);
 		}
 		return u;
 	}
@@ -65,6 +66,7 @@ public class UserDaoImpl implements UserDao{
 			u.setUsername(rs.getString("user_name"));
 			u.setProfession(rs.getString("profession"));
 		}
+		DBUtil.CloseDB(rs, ps, conn);
 		return u;
 	}
 	
@@ -86,6 +88,7 @@ public class UserDaoImpl implements UserDao{
 			u.setUsername(rs.getString("user_name"));
 			u.setProfession(rs.getString("profession"));
 		}
+		DBUtil.CloseDB(rs, ps, conn);
 		return u;
 	}
 	//查找所有权限为1的用户，返回一个User类型的arrylist
@@ -99,7 +102,7 @@ public class UserDaoImpl implements UserDao{
 		ps = conn.prepareStatement("select user_id,password,user_name,profession from usertable where status=1");
 		rs = ps.executeQuery();
 		User u = null;
-		if(rs.next()) {
+		while(rs.next()) {
 			u = new User();
 			u.setUserid(rs.getString("user_id"));
 			u.setPassword(rs.getString("password"));
@@ -109,6 +112,7 @@ public class UserDaoImpl implements UserDao{
 					 
 			
 		}
+		DBUtil.CloseDB(rs, ps, conn);
 		return user_Array;
 	}
 	//更新用户信息
@@ -118,12 +122,12 @@ public class UserDaoImpl implements UserDao{
 		PreparedStatement ps = null;
      	conn=DBUtil.getConnection();
      	//status����Ϊ1
-     	 ps = conn.prepareStatement("update  usertable set user_id=?,password=?,user_name=?,profession=? where user_id=\'?\'");
-		 ps.setString(1, user.getUserid());
-		 ps.setString(2, user.getPassword());
-		 ps.setString(3, user.getUsername());
-		 ps.setString(4, user.getProfession());
-		 ps.setString(5, user.getUserid());
+     	 ps = conn.prepareStatement("update  usertable set password=?,user_name=?,profession=? where user_id=?");
+		 
+		 ps.setString(1, user.getPassword());
+		 ps.setString(2, user.getUsername());
+		 ps.setString(3, user.getProfession());
+		 ps.setString(4, user.getUserid());
 		 ps.executeUpdate();
 
 	}
@@ -133,7 +137,7 @@ public class UserDaoImpl implements UserDao{
 		Connection conn = null;
 		PreparedStatement ps = null;
      	conn=DBUtil.getConnection();
-     	ps = conn.prepareStatement("delete from usertable where user_id=\'?\'");
+     	ps = conn.prepareStatement("delete from usertable where user_id=?");
      	ps.setString(1, user.getUserid());
      	ps.executeUpdate();
 	}

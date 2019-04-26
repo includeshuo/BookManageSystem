@@ -60,7 +60,7 @@ public class RegistServlet extends HttpServlet {
 				us.addUser(u);
 				
 				  response.getWriter().write("注册成功");
-				  response.setHeader("refresh","1;url="+request.getContextPath()+"/login.jsp");
+				  response.setHeader("refresh","1;url="+request.getContextPath()+"/admin_user.jsp");
 			}
 			
 		} catch (Exception e) {

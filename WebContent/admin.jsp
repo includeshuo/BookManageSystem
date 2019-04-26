@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import = "com.ys.bean.User,com.ys.dao.impl.UserDaoImpl,com.ys.dao.UserDao,com.ys.bean.BookHistory" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML >
 <html lang="zh-CN" class="ax-vertical-centered">
 <head>
 	<meta charset="UTF-8">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="static/css/bootstrap-admin-theme.css">
         <link rel="stylesheet" href="static/css/bootstrap-admin-theme.css">
         <script src="static/js/bootstrap.min.js"></script>
-        <script src="static/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="static/jQuery/jquery-3.1.1.min.js"></script>
             <script src="static/js/bootstrap-dropdown.min.js"></script>
                       
               <script src="static/ajax-lib/ajaxutils.js"></script>
@@ -28,23 +28,33 @@
 
 
 <body class="bootstrap-admin-with-small-navbar">
+<%
+User user = new User();
+String userid = (String)session.getAttribute("userid");
+UserDao ud = new UserDaoImpl();
+user = ud.findUserByName2(userid);
+
+%>
 
     <nav class="navbar navbar-inverse navbar-fixed-top bootstrap-admin-navbar bootstrap-admin-navbar-under-small" role="navigation">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="collapse navbar-collapse main-navbar-collapse">
-                        <a class="navbar-brand" href="/admin/admin.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
+                        <a class="navbar-brand" href="/BookManageSystem/admin.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您， <s:property value="#session.admin.name"/> <i class="caret"></i></a>
+                                <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> 
+                                <i class="glyphicon glyphicon-user">
+                                </i> 欢迎您， <s:property value="#session.admin.name"/> 
+                                <i class="caret"></i></a>
                             
                                  <ul class="dropdown-menu">
                                      <li><a href="#updateinfo" data-toggle="modal">个人资料</a></li>
                                       <li role="presentation" class="divider"></li>
                                        <li><a href="#updatepwd" data-toggle="modal">修改密码</a></li>
                                         <li role="presentation" class="divider"></li>
-                                    <li><a href="/books/login.jsp">退出</a></li>
+                                    <li><a href="/BookManageSystem/login.jsp">退出</a></li>
                                 </ul>
                                 
                             </li>
@@ -61,20 +71,19 @@
             <!-- left, vertical navbar -->
             <div class="col-md-2 bootstrap-admin-col-left">
                 <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
+                
                     <li>
-                        <a href="/books/admin_book.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书管理</a>
+                        <a href="/BookManageSystem/admin_book.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书管理</a>
                     </li>
                     <li>
-                        <a href="/books/admin_user.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 读者管理</a>
+                        <a href="/BookManageSystem/admin_user.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 读者管理</a>
+                    </li>
+                   
+                    <li>
+                        <a href="/BookManageSystem/admin_borrow.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书借阅信息</a>
                     </li>
                     <li>
-                        <a href="/books/admin_booktype.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书分类管理</a>
-                    </li>
-                    <li>
-                        <a href="/books/admin_borrow.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书借阅信息</a>
-                    </li>
-                    <li>
-                        <a href="/books/admin_history.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书归还信息</a>
+                        <a href="/BookManageSystem/admin_history.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书归还信息</a>
                     </li>
                   
                 </ul>
@@ -89,29 +98,35 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
+                              
+                                 
                                 <div class="text-muted bootstrap-admin-box-title">图书管理</div>
                             </div>
                             <div class="bootstrap-admin-panel-content">
                                 <ul>
+                                 
                                     <li>根据图书编号、图书名称查询图书基本信息</li>
                                     <li>添加、修改、删除图书</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                  <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <div class="text-muted bootstrap-admin-box-title">图书分类管理</div>
+                           
+                                
+                                <div class="text-muted bootstrap-admin-box-title">读者管理</div>
                             </div>
                             <div class="bootstrap-admin-panel-content">
+                           
                                 <ul>
-                                    <li>根据分类名称查询图书分类信息</li>
-                                    <li>添加、修改、删除图书分类</li>
+                                    <li>根据账号、姓名查询读者基本信息</li>
+                                    <li>添加、修改、删除读者信息</li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -141,19 +156,7 @@
                 </div>
                 <div class="row">
                   
-                   <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="text-muted bootstrap-admin-box-title">读者管理</div>
-                            </div>
-                            <div class="bootstrap-admin-panel-content">
-                                <ul>
-                                    <li>根据账号、姓名查询读者基本信息</li>
-                                    <li>添加、修改、删除读者信息</li>
-                                </ul>
-                            </div>
-                        </div>
-                </div>
+                   
            
             </div>
             
@@ -172,7 +175,7 @@
     
 <!-------------------------------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="/BookManageSystem/AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updatepwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -224,7 +227,7 @@
                                    
                                    <!-------------------------个人资料模糊框------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="/BookManageSystem/AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updateinfo" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -243,11 +246,20 @@
 								<!--正文-->
 								<input type="hidden" name="tip" value="2">
 								<input type="hidden" name="url" value="admin">
-							<div class="form-group">
+								<div class="form-group">
 								<label for="firstname" class="col-sm-3 control-label">真实姓名</label>
-								
+								<div class="col-sm-7">
+			<input type="text" class="form-control" id="name" name="name" placeholder="请输入您的真实姓名" value='<% out.write(user.getUsername());%>'>
+										<label class="control-label" for="name" style="display: none"></label>			
+								</div>
 							</div>	
-							
+							<div class="form-group">
+								<label for="firstname" class="col-sm-3 control-label">专业</label>
+								<div class="col-sm-7">
+			<input type="text" class="form-control" id="profession" name="profession"  placeholder="请输入您的专业" value='<% out.write(user.getProfession());%>'>
+											<label class="control-label" for="profession" style="display: none"></label>				
+								</div>
+							</div>
 							
 							
 							

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import = "com.ys.bean.User,com.ys.bean.BookHistory,com.ys.dao.BookDao,com.ys.dao.impl.BookDaoImpl,com.ys.dao.UserDao,com.ys.dao.impl.UserDaoImpl" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML >
 <html lang="zh-CN" class="ax-vertical-centered">
 <head>
 	<meta charset="UTF-8">
@@ -41,7 +41,7 @@ user = ud.findUserByName2(userid);
         <div class="row">
             <div class="col-lg-12">
                 <div class="collapse navbar-collapse main-navbar-collapse">
-                    <a class="navbar-brand" href="/reader.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
+                    <a class="navbar-brand" href="/BookManageSystem/userindex.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i>     欢迎您，<s:property value="#session.reader.name"/><i class="caret"></i></a>
@@ -50,7 +50,7 @@ user = ud.findUserByName2(userid);
                                  <li role="presentation" class="divider"></li>
                                 <li><a href="#updatepwd" data-toggle="modal">修改密码</a></li>
                                 <li role="presentation" class="divider"></li>
-                                <li><a href="/books/login.jsp">退出</a></li>
+                                <li><a href="/BookManageSystem/login.jsp">退出</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -66,11 +66,7 @@ user = ud.findUserByName2(userid);
         <!-- left, vertical navbar -->
         <div class="col-md-2 bootstrap-admin-col-left">
             <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
-            <li>1
-            </li>
-            <li>1
-            </li>
-            <li>1
+           
                <li>
                     <a href="/BookManageSystem/select.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书查询</a>
                 </li>
@@ -125,6 +121,7 @@ user = ud.findUserByName2(userid);
   for (BookHistory bean : bookdata){
   %>                 
                             	<tbody>
+                            	<tr>
 	                         	   	<td><%= bean.getBookid() %></td>
 	                         	   	<td><%= bean.getBookname() %></td>
 	                                <td><%= bean.getUserid() %></td>
@@ -133,17 +130,17 @@ user = ud.findUserByName2(userid);
 	                                <td><%= bean.getEndtime() %></td>  
 	                                <td>
 <button type="button" class="btn btn-info btn-xs" data-toggle="modal" onclick="haibook(<%= bean.getHid() %>)">还书</button>
-	                                </td>                                               
+</td>  </tr>                                             
                           	  </tbody>
                              <%} %> 
                         </table>
                     </div>
                 </div>
             <script type="text/javascript">
-    function haibook(bookid) {
+    function haibook(hid) {
     	con=confirm("是否还书?"); 
     	if(con==true){
-    		location.href = "/BookManageSystem/BorrowServlet?tip=2&show=1&bookid="+bookid;
+    		location.href = "/BookManageSystem/BorrowServlet?tip=2&show=1&hid="+hid;
     	}
     }
     </script>
@@ -271,7 +268,7 @@ user = ud.findUserByName2(userid);
     
 <!-------------------------------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="/BookManageSystem/AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updatepwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -323,7 +320,7 @@ user = ud.findUserByName2(userid);
                                    
                                    <!-------------------------个人资料模糊框------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="/BookManageSystem/AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updateinfo" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -356,8 +353,8 @@ user = ud.findUserByName2(userid);
 							<div class="form-group">
 								<label for="firstname" class="col-sm-3 control-label">专业</label>
 								<div class="col-sm-7">
-			<input type="text" class="form-control" id="email" name="email"  placeholder="请输入您的专业" value='<% out.write(user.getProfession());%>'>
-											<label class="control-label" for="email" style="display: none"></label>				
+			<input type="text" class="form-control" id="profession" name="profession"  placeholder="请输入您的专业" value='<% out.write(user.getProfession());%>'>
+											<label class="control-label" for="profession" style="display: none"></label>				
 								</div>
 							</div>	
 							

@@ -77,11 +77,11 @@ public class BorrowServlet extends HttpServlet {
 			 * 还书在管理员和读者界面都有，为了区分，设置了show字段，show为1表示读者界面
 			 */
 			Book book = new Book();
-			book.setBookid(Integer.parseInt(request.getParameter("bookid")));
+			int hid = Integer.parseInt(request.getParameter("hid"));
 			int show = Integer.parseInt(request.getParameter("show"));
 			//调用还书函数，改变status字段
 			try {
-				bookdao.returnBook(book);
+				bookdao.returnBook(hid);
 			} catch (Exception e) {
 				
 				e.printStackTrace();
@@ -89,7 +89,7 @@ public class BorrowServlet extends HttpServlet {
 			if(show==1){
 				response.sendRedirect("/BookManageSystem/borrow.jsp");
 			}else{
-				response.sendRedirect("/books/admin_borrow.jsp");
+				response.sendRedirect("/BookManageSystem/admin_borrow.jsp");
 			}
 			
 		}

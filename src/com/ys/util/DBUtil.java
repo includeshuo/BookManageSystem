@@ -2,6 +2,8 @@ package com.ys.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -27,4 +29,33 @@ public class DBUtil {
 	public static Connection getConnection() throws SQLException{
 		return DriverManager.getConnection(url,username,password);
 		}
+	public static void CloseDB(ResultSet rs, PreparedStatement stm, Connection conn){
+		if(rs!=null)
+		{
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(stm!=null)
+		{
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(conn!=null)
+		{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }

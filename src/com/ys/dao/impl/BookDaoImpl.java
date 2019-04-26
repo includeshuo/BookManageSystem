@@ -29,6 +29,7 @@ public class BookDaoImpl implements BookDao{
 	 ps.setInt(6,book.getBookcount() );
 	
 	 ps.executeUpdate();
+	 
 		
 	}
 	//查找单个图书
@@ -52,6 +53,7 @@ public class BookDaoImpl implements BookDao{
 			b.setBooktype(rs.getString("book_type"));
 			b.setBookcount(rs.getInt("book_count"));	
 		}
+		DBUtil.CloseDB(rs, ps, conn);
 		return b;
 	}
 	//查所有图书返回arraylist
@@ -65,7 +67,7 @@ public class BookDaoImpl implements BookDao{
 		ps = conn.prepareStatement("select * from book");
 		rs = ps.executeQuery();
 		Book b = null;
-		if(rs.next()) {
+		while(rs.next()) {
 			b = new Book();
 			 b.setBookid(rs.getInt("book_id"));
 			b.setBookname(rs.getString("book_name"));
@@ -76,6 +78,7 @@ public class BookDaoImpl implements BookDao{
 			book_Array.add(b);
 					 
 		}
+		DBUtil.CloseDB(rs, ps, conn);
 		return book_Array;
 	}
 	//修改图书信息
@@ -84,7 +87,7 @@ public class BookDaoImpl implements BookDao{
 		Connection conn = null;
 		PreparedStatement ps = null;
 		conn=DBUtil.getConnection();
-		ps = conn.prepareStatement("update book set book_id=?, book_name=?,	book_author=?,book_pub=?,book_type=?,book_count=? where book_id=\'?\' ");
+		ps = conn.prepareStatement("update book set book_id=?, book_name=?,	book_author=?,book_pub=?,book_type=?,book_count=? where book_id=? ");
 		ps.setInt(1, book.getBookid());
 		 ps.setString(2,book.getBookname() );
 		 ps.setString(3,book.getBookauthor() );
@@ -101,7 +104,7 @@ public class BookDaoImpl implements BookDao{
 		PreparedStatement ps = null;
 		conn=DBUtil.getConnection();
 		//未测试
-		ps = conn.prepareStatement("delete from book where book_id=\'?\'");
+		ps = conn.prepareStatement("delete from book where book_id=?");
 		ps.setInt(1, book.getBookid());
 		ps.executeUpdate();
 	}
@@ -118,8 +121,9 @@ public class BookDaoImpl implements BookDao{
 		ps.setInt(2,status);
 		rs = ps.executeQuery();
 		BookHistory bh =null;
-		if(rs.next()) {
+		while(rs.next()) {
 			bh = new BookHistory();
+			bh.setHid(rs.getInt("hid"));
 			bh.setUserid(rs.getString("user_id"));		
 			bh.setUsername(rs.getString("user_name"));
 			bh.setBookid(rs.getInt("book_id"));
@@ -129,23 +133,24 @@ public class BookDaoImpl implements BookDao{
 			bh.setStatus(rs.getInt("status"));
 			tag_Array.add(bh);
 		}
-		
+		DBUtil.CloseDB(rs, ps, conn);
 		return tag_Array;
 	}
 	//只传入status
 	@Override
-	public ArrayList<BookHistory> get_HistoryListInfo2(BookHistory h) throws Exception {
+	public ArrayList<BookHistory> get_HistoryListInfo2(int status) throws Exception {
 		ArrayList<BookHistory> tag_Array = new ArrayList<BookHistory>();
 		Connection conn = null;
 		PreparedStatement ps = null;
 		conn=DBUtil.getConnection();
 		ResultSet rs = null;
 		ps = conn.prepareStatement("select * from borrowhistory where status=?");
-		ps.setInt(1,h.getStatus());
+		ps.setInt(1,status);
 		rs = ps.executeQuery();
 		BookHistory bh =null;
-		if(rs.next()) {
+		while(rs.next()) {
 			bh = new BookHistory();
+			bh.setHid(rs.getInt("hid"));
 			bh.setUserid(rs.getString("user_id"));		
 			bh.setUsername(rs.getString("user_name"));
 			bh.setBookid(rs.getInt("book_id"));
@@ -155,7 +160,7 @@ public class BookDaoImpl implements BookDao{
 			bh.setStatus(rs.getInt("status"));
 			tag_Array.add(bh);
 		}
-		
+		DBUtil.CloseDB(rs, ps, conn);
 		return tag_Array;
 		
 	}
@@ -182,6 +187,7 @@ public class BookDaoImpl implements BookDao{
 		b.setBookcount(rs.getInt("book_count"));
 		tag_Array.add(b);
 	}
+		DBUtil.CloseDB(rs, ps, conn);
 		return tag_Array;
 	}
 	//借书功能
@@ -195,7 +201,7 @@ public class BookDaoImpl implements BookDao{
      			//生成日期的功能
      			Calendar c = Calendar.getInstance();
      			int year = c.get(Calendar.YEAR);  
-     			int month = c.get(Calendar.MONTH);   
+     			int month = c.get(Calendar.MONTH)+1;   
      			int day = c.get(Calendar.DATE);  
      			//生成借阅开始日期
      			String begintime = ""+year+"-"+month+"-"+day;
@@ -218,11 +224,11 @@ public class BookDaoImpl implements BookDao{
      			rs = ps.executeUpdate();
 	}
 	@Override
-	public void returnBook(Book book) throws Exception {
+	public void returnBook(int hid) throws Exception {
 				//生成日期
 				Calendar c = Calendar.getInstance();
 				int year = c.get(Calendar.YEAR);  
-				int month = c.get(Calendar.MONTH);   
+				int month = c.get(Calendar.MONTH)+1;   
 				int day = c.get(Calendar.DATE); 
 				//生成还书日期
 				String endtime = ""+year+"-"+month+"-"+day;
@@ -233,10 +239,10 @@ public class BookDaoImpl implements BookDao{
 				PreparedStatement ps = null;
 				conn=DBUtil.getConnection();
 				//先加上转译不行再删
-				ps = conn.prepareStatement("update borrowhistory set end_time=?,status=? where book_id=?");
+				ps = conn.prepareStatement("update borrowhistory set end_time=?,status=? where hid=?");
 				ps.setString(1, endtime);
 				ps.setInt(2, 0);
-				ps.setInt(3, book.getBookid());
+				ps.setInt(3, hid);
 				ps.executeUpdate();
 	}
 	

@@ -6,7 +6,14 @@ public class User {
 	private String username;
 	private String profession;
 	private int status;
+
 	
+	
+	@Override
+	public String toString() {
+		return "User [userid=" + userid + ", password=" + password + ", username=" + username + ", profession="
+				+ profession + ", status=" + status + "]";
+	}
 	public int getStatus() {
 		return status;
 	}

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="static/css/bootstrap-admin-theme.css">
         <link rel="stylesheet" href="static/css/bootstrap-admin-theme.css">
         <script src="static/js/bootstrap.min.js"></script>
-        <script src="static/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="static/jQuery/jquery-3.1.1.min.js"></script>
         <script src="static/ajax-lib/ajaxutils.js"></script>
          <script src="static/js/login.js"></script>
 </head>

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import = "com.ys.bean.User,com.ys.bean.BookHistory,com.ys.dao.BookDao,com.ys.dao.impl.BookDaoImpl,com.ys.dao.UserDao,com.ys.dao.impl.UserDaoImpl" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML >
 <html lang="zh-CN" class="ax-vertical-centered">
 <head>
 	<meta charset="UTF-8">
@@ -43,12 +43,7 @@ user = ud.findUserByName2(userid);
                 <div class="collapse navbar-collapse main-navbar-collapse">
                 
                 
-                
-                <!-- 应该有一个判断 权限是管理员还是用户然后分别对应转发不同首页 -->
-                
-                
-                
-                    <a class="navbar-brand" href="/login.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
+                    <a class="navbar-brand" href="/BookManageSystem/userindex.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i>     欢迎您，<s:property value="#session.user.username"/><i class="caret"></i></a>
@@ -73,11 +68,7 @@ user = ud.findUserByName2(userid);
         <!-- left, vertical navbar -->
         <div class="col-md-2 bootstrap-admin-col-left">
             <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
-            <li>1
-            </li>
-            <li>1
-            </li>
-            <li>1
+           
                <li>
                     <a href="/BookManageSystem/select.jsp"><i class="glyphicon glyphicon-chevron-right"></i> 图书查询</a>
                 </li>
@@ -127,18 +118,19 @@ user = ud.findUserByName2(userid);
                              bookdata = (ArrayList<BookHistory>)request.getAttribute("data");
                            if(bookdata==null){
                         	   BookDao bookdao = new BookDaoImpl();
-                        	   bookdata = (ArrayList<BookHistory>)bookdao.get_HistoryListInfo(1, user);
+                        	   bookdata = (ArrayList<BookHistory>)bookdao.get_HistoryListInfo(0, user);
                            }
   for (BookHistory bean : bookdata){
   %>                   
                             	<tbody>
+                            	<tr>
 	                         	   	<td><%= bean.getBookid() %></td>
 	                         	   	<td><%= bean.getBookname() %></td>
 	                                <td><%= bean.getUserid() %></td>
 	                                <td><%= bean.getUsername() %></td>
 	                                <td><%= bean.getBegintime() %></td>
 	                                <td><%= bean.getEndtime() %></td>  
-	                                                                            
+	                              </tr>                                             
                           	  </tbody>
                              <%} %> 
                         </table>
@@ -279,7 +271,7 @@ user = ud.findUserByName2(userid);
 
 <!-------------------------------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="/BookManageSystem/AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updatepwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -331,7 +323,7 @@ user = ud.findUserByName2(userid);
                                    
                                    <!-------------------------个人资料模糊框------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="/BookManageSystem/AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updateinfo" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -358,14 +350,13 @@ user = ud.findUserByName2(userid);
 								</div>
 							</div>	
 							
-							
-						<div class="form-group">
+					<div class="form-group">
 								<label for="firstname" class="col-sm-3 control-label">专业</label>
 								<div class="col-sm-7">
-			<input type="text" class="form-control" id="email" name="email"  placeholder="请输入您的专业" value='<% out.write(user.getProfession());%>'>
-											<label class="control-label" for="email" style="display: none"></label>				
+			<input type="text" class="form-control" id="profession" name="profession"  placeholder="请输入您的专业" value='<% out.write(user.getProfession());%>'>
+											<label class="control-label" for="profession" style="display: none"></label>				
 								</div>
-							</div>	
+							</div>
 							
 								<!--正文-->
 								

@@ -31,26 +31,26 @@ public class DeleteBookServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//删除图书信息
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		Book book = new Book();
+		book.setBookid(Integer.parseInt(request.getParameter("bid")));
+		BookDao bookdao = new BookDaoImpl();
+		try {
+			bookdao.deleteBook(book);
+			response.sendRedirect("/BookManageSystem/admin_book.jsp");
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//删除图书信息
-				request.setCharacterEncoding("UTF-8");
-				response.setContentType("text/html;charset=UTF-8");
-				Book book = new Book();
-				book.setBookid(Integer.parseInt(request.getParameter("bid")));
-				BookDao bookdao = new BookDaoImpl();
-				try {
-					bookdao.deleteBook(book);
-				} catch (Exception e) {
-					
-					e.printStackTrace();
-				}
+		
 		doGet(request, response);
 	}
 

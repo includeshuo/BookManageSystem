@@ -1,6 +1,7 @@
 package com.ys.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import com.ys.dao.impl.BookDaoImpl;
 /**
  * Servlet implementation class AddBookServlet
  */
-@WebServlet("/addbook")
+@WebServlet("/AddBookServlet")
 public class AddBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,7 +30,7 @@ public class AddBookServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		PrintWriter out = response.getWriter();
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		Book b = new Book();
@@ -45,16 +46,17 @@ public class AddBookServlet extends HttpServlet {
 		BookDao book = new BookDaoImpl();
 		
 		  try {
-			  request.setAttribute("msg", "图书已经存在");
+			  
 		     Book result = book.findBookById(b);
 			if(result!=null) {
-				request.getRequestDispatcher("/addbook.jsp").forward(request, response);
+				out.write("<script type='text/javascript'>alert('Book already existed');location.href='/BookManageSystem/admin_book.jsp';  </script>");
+				
 				
 			}else {
 				book.addBook(b);
 				
-				  response.getWriter().write("添加成功");
-				  response.setHeader("refresh","1;url="+request.getContextPath()+"/addbook.jsp");
+				response.sendRedirect("/BookManageSystem/admin_book.jsp");
+				  
 			}
 		} catch (Exception e) {
 			

@@ -53,10 +53,21 @@ public class AdminServlet extends HttpServlet {
 			User user = userdao.findUserByName2(userid);
 			//修改密码
 			if(tip==1){
-				
-				user.setPassword(request.getParameter("password")) ;
+				//获取到输入的旧密码，新密码
+				String password = request.getParameter("password");
+				String password2 = request.getParameter("password2");
+				//获取读者数据表中的密码
+				String old_password = user.getPassword();
+				if(old_password.equals(password)){
+					user.setPassword(password2);
 					userdao.updateUser(user);
 					response.sendRedirect("/BookManageSystem/"+url+".jsp");
+				}else{
+					out.write("<script type='text/javascript'>alert('password error');location.href='"+url+".jsp';  </script>");
+					
+				}
+					
+					
 			
 			}else{
 				//修改个人资料

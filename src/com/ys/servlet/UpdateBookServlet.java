@@ -48,7 +48,7 @@ public class UpdateBookServlet extends HttpServlet {
 			
 			e.printStackTrace();
 		}
-		response.sendRedirect("/books/admin_book.jsp");
+		response.sendRedirect("/BookManageSystem/admin_book.jsp");
 		doGet(request, response);
 	}
 
